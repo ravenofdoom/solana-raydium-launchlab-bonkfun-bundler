@@ -199,48 +199,10 @@ const results = await bundler.executeBatchTrades(trades);
 - ✅ **Input Validation**: Comprehensive parameter validation
 - ✅ **Error Handling**: Graceful failure recovery
 
-### Audit Status
-- 🔍 **Internal Audit**: Completed
-- 🔍 **External Audit**: In Progress (Q1 2024)
-- 🔍 **Bug Bounty**: Active on Immunefi
-
 ---
 
-## 🏆 Community & Support
-
-### Join Our Community
-- �� **Twitter**: [@BonkFunBundler](https://twitter.com/BonkFunBundler)
-- �� **Discord**: [Join our Discord](https://discord.gg/bonkfunbundler)
-- 📱 **Telegram**: [@BonkFunBundler](https://t.me/BonkFunBundler)
-- �� **Documentation**: [docs.bonkfunbundler.com](https://docs.bonkfunbundler.com)
-
-### Contributing
-We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
-
-### Bug Reports
-Found a bug? Please report it on our [GitHub Issues](https://github.com/yourusername/bonkfun-bundler/issues).
-
----
-
-## 📊 Roadmap
-
-### Q1 2024 🎯
-- [x] Core bundling functionality
-- [x] Raydium integration
-- [ ] Orca integration
-- [ ] Jupiter aggregator support
-
-### Q2 2024 ��
-- [ ] Mobile SDK
-- [ ] Advanced analytics dashboard
-- [ ] Multi-chain support
-- [ ] Institutional features
-
-### Q3 2024 🌟
-- [ ] AI-powered trade optimization
-- [ ] Social trading features
-- [ ] DeFi protocol integrations
-- [ ] Governance token launch
+## Example Transaction (Token launch + buying from 16 wallets in same block)
+https://explorer.jito.wtf/bundle/aec76b777303c0782d0f2e6bf4402df0edd92fcd5a40def0d7f3a05f03a59832
 
 ---
 
@@ -269,19 +231,7 @@ Found a bug? Please report it on our [GitHub Issues](https://github.com/youruser
 ## 📞 Get in Touch
 
 Ready to revolutionize your BonkFun trading? We'd love to hear from you!
-
-- �� **Website**: [bonkfunbundler.com](https://bonkfunbundler.com)
-- 📧 **Email**: hello@bonkfunbundler.com
-- 💼 **Business**: partnerships@bonkfunbundler.com
-- 🐛 **Support**: support@bonkfunbundler.com
-
-### Quick Contact Form
-```bash
-# Send us a message
-curl -X POST https://api.bonkfunbundler.com/contact \
-  -H "Content-Type: application/json" \
-  -d '{"name":"Your Name","email":"your@email.com","message":"I want to learn more!"}'
-```
+- 🐛 **Support**: https://t.me/frogansol
 
 ---
 
@@ -293,11 +243,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 <div align="center">
 
-**Made with ❤️ by the BonkFun Community**
-
-[![Star on GitHub](https://img.shields.io/github/stars/yourusername/bonkfun-bundler?style=social)](https://github.com/yourusername/bonkfun-bundler)
-[![Fork on GitHub](https://img.shields.io/github/forks/yourusername/bonkfun-bundler?style=social)](https://github.com/yourusername/bonkfun-bundler/fork)
-
 **⭐ Star this repo if you found it helpful! ⭐**
 
 </div>
@@ -306,8 +251,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 *This README is designed to be engaging, informative, and conversion-focused. It includes clear value propositions, practical examples, social proof, and multiple contact points to encourage users to reach out.*
 
-## Contact
-https://t.me/frogansol
-
-## Example Transaction (Token launch + buying from 16 wallets in same block)
-https://explorer.jito.wtf/bundle/aec76b777303c0782d0f2e6bf4402df0edd92fcd5a40def0d7f3a05f03a59832
