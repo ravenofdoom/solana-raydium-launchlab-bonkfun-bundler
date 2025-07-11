@@ -1,5 +1,4 @@
 # 🚀 BonkFun / Raydium Launchlab Bundler - Jito-Powered MEV Protection
-Solana Raydium Launchpad / Letsbonkfun(bonkdotfun, bonk.fun, letsbonk.fun, letsbonkdotfun) Bundler
 **The Ultimate MEV-Protected Trading Solution for BonkFun on Solana**
 
 ---
@@ -14,22 +13,22 @@ Solana Raydium Launchpad / Letsbonkfun(bonkdotfun, bonk.fun, letsbonk.fun, letsb
 - ⚡ **Lightning Fast**: Sub-second transaction execution on Solana
 - 💰 **Cost Effective**: Reduced gas costs through optimized bundling
 - 🎯 **Fair Trading**: Equal opportunity for all traders, regardless of size
-
+- **Multiple Wallet Buy**: Support 16 wallets of buying in the same block with token launch
 ---
 
 ## �� Why Choose BonkFun Bundler?
 
 ### Before BonkFun Bundler ❌
-Trader A: Places buy order
-MEV Bot: Front-runs with higher gas
-Trader A: Gets worse price + pays more fees
-Result: Trader A loses money
+- Trader A: Places buy order
+- MEV Bot: Front-runs with higher gas
+- Trader A: Gets worse price + pays more fees
+- Result: Trader A loses money
 
 ### With BonkFun Bundler ✅
-Trader A: Places buy order
-Jito Bundle: Executes at optimal price
-MEV Bot: Blocked by bundling
-Result: Trader A gets best execution
+- Trader A: Places buy order
+- Jito Bundle: Executes at optimal price
+- MEV Bot: Blocked by bundling
+- Result: Trader A gets best execution
 
 
 ---
@@ -56,8 +55,8 @@ Result: Trader A gets best execution
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/bonkfun-bundler.git
-cd bonkfun-bundler
+git clone https://github.com/Blocky-Lab/solana-raydium-launchpad-bonkfun-bundler.git
+cd solana-raydium-launchpad-bonkfun-bundler
 
 # Install dependencies
 npm install
