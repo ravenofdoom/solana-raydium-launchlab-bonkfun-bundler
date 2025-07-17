@@ -86,16 +86,6 @@ https://explorer.jito.wtf/bundle/aec76b777303c0782d0f2e6bf4402df0edd92fcd5a40def
 ---
 
 
-## 💰 Pricing
-
-| Plan | Price | Features |
-|------|-------|----------|
-| **Free** | $0 | 10 trades/month, basic support |
-| **Pro** | $29/month | Unlimited trades, priority support |
-| **Enterprise** | Custom | Custom integrations, dedicated support |
-
----
-
 ## 📞 Get in Touch
 
 Ready to revolutionize your BonkFun trading? We'd love to hear from you!
