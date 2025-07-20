@@ -16,7 +16,7 @@
 - **Multiple Wallet Buy**: Support 16 wallets of buying in the same block with token launch
 ---
 
-## �� Why Choose BonkFun Bundler?
+## � Why Choose BonkFun Bundler?
 
 ### Before BonkFun Bundler ❌
 - Trader A: Places buy order
@@ -69,8 +69,11 @@ cp .env.example .env
 ---
 
 ## 📈 Real-World Examples
-- Token launch + buying from 16 wallets in same block
+- Raydium Launchlab Bundler (16 wallets)
 https://explorer.jito.wtf/bundle/aec76b777303c0782d0f2e6bf4402df0edd92fcd5a40def0d7f3a05f03a59832
+
+- Bonkfun Bundler (8 wallets)
+https://explorer.jito.wtf/bundle/69b7f510c2232239695529fc5c53d290576b1d460ced81430c0d9fd305faf2f2
 
 ---
 
