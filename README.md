@@ -73,7 +73,10 @@ cp .env.example .env
 https://explorer.jito.wtf/bundle/aec76b777303c0782d0f2e6bf4402df0edd92fcd5a40def0d7f3a05f03a59832
 
 - Bonkfun Bundler (8 wallets)
+
 https://explorer.jito.wtf/bundle/69b7f510c2232239695529fc5c53d290576b1d460ced81430c0d9fd305faf2f2
+
+Token URL: https://solscan.io/token/evcCmU89HYwrdvKJz9wj5NzNhVAws9Qv5HNzKCWtq4d
 
 ---
 
