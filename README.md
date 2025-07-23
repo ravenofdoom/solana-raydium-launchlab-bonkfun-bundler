@@ -1,4 +1,4 @@
-# 🚀 BonkFun / Raydium Launchlab Bundler - Jito-Powered MEV Protection
+# 🚀 BonkFun / Raydium Launchlab Bundler | Jito-Powered MEV Protection
 **The Ultimate MEV-Protected Trading Solution for BonkFun on Solana**
 
 ---
