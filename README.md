@@ -16,6 +16,12 @@
 - **Multiple Wallet Buy**: Support 16 wallets of buying in the same block with token launch
 ---
 
+## 📞 Get in Touch
+
+Ready to revolutionize your BonkFun trading? We'd love to hear from you!
+- 🐛 **Support**: https://t.me/frogansol
+
+---
 ## � Why Choose BonkFun Bundler?
 
 ### Before BonkFun Bundler ❌
@@ -89,13 +95,6 @@ Token URL: https://solscan.io/token/evcCmU89HYwrdvKJz9wj5NzNhVAws9Qv5HNzKCWtq4d
 - ✅ **Input Validation**: Comprehensive parameter validation
 - ✅ **Error Handling**: Graceful failure recovery
 
----
-
-
-## 📞 Get in Touch
-
-Ready to revolutionize your BonkFun trading? We'd love to hear from you!
-- 🐛 **Support**: https://t.me/frogansol
 
 ---
 
