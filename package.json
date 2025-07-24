@@ -1,12 +1,20 @@
 {
-  "name": "bonkfun bundler",
+  "name": "bonkfun-bundler",
+  "version": "1.0.0",
+  "description": "The Ultimate MEV-Protected Trading Solution for BonkFun on Solana",
+  "main": "index.ts",
   "author": "https://t.me/frogansol",
+  "license": "MIT",
   "scripts": {
-    "tsc": "tsc",
+    "build": "tsc",
     "start": "ts-node index.ts",
+    "dev": "ts-node --watch index.ts",
     "gather": "ts-node gather.ts",
     "closeLut": "ts-node closeLut.ts",
-    "closeWsol": "ts-node closeWsol.ts"
+    "closeWsol": "ts-node closeWsol.ts",
+    "main": "ts-node main.ts",
+    "setup": "node setup.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
     "@metaplex-foundation/mpl-token-metadata": "^3.2.1",
