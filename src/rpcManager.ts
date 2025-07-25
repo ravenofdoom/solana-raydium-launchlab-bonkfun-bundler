@@ -18,6 +18,12 @@ const RPC_ENDPOINTS: RPCEndpoint[] = [
     rateLimit: 100
   },
   {
+    url: process.env.EXTRNODE_RPC_URL || "",
+    name: "ExtrNode",
+    weight: 9,
+    rateLimit: 75
+  },
+  {
     url: process.env.MORALIS_RPC_URL || "",
     name: "Moralis", 
     weight: 8,

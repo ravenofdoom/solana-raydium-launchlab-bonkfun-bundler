@@ -15,6 +15,7 @@
     "main": "ts-node main.ts",
     "setup": "node setup.js",
     "security-audit": "node security-audit.js",
+    "test-rpc": "node test-rpc.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {

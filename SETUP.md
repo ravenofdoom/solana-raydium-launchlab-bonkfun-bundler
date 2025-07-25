@@ -23,6 +23,7 @@ PRIVATE_KEY=YOUR_ACTUAL_PRIVATE_KEY_HERE
 ```
 
 **⚠️ Security Reminder:**
+
 - Use a **dedicated wallet** for bundling only
 - Don't use your main wallet
 - Keep at least 5 SOL in the wallet for operations
@@ -59,11 +60,13 @@ QUICKNODE_RPC_URL=https://your-endpoint.solana-mainnet.quiknode.pro/YOUR_TOKEN/
 ## 🧪 Testing Steps
 
 ### 1. **Run Security Audit**
+
 ```bash
 npm run security-audit
 ```
 
 ### 2. **Test on Devnet First** (Recommended)
+
 ```bash
 # Temporarily change RPC endpoint in .env to devnet:
 RPC_ENDPOINT=https://api.devnet.solana.com
@@ -73,6 +76,7 @@ npm start
 ```
 
 ### 3. **Production Run**
+
 ```bash
 # Make sure you're on mainnet RPC
 # Run with your actual configuration
@@ -94,9 +98,10 @@ npm start
 ## 📞 Support
 
 If you encounter issues:
+
 - Check the security audit output
 - Verify your .env configuration
 - Ensure sufficient SOL balance (5+ SOL recommended)
 - Test on devnet first
 
-**Ready to bundle! 🚀**
+## Ready to bundle! 🚀
