@@ -79,7 +79,22 @@ web_modules/
 .env.production.local
 .env.local
 
-# parcel-bundler cache (https://parceljs.org/)
+# Private keys and sensitive data
+*.key
+*.pem
+wallet-*.json
+private-keys.json
+keypairs/
+wallets/
+.secrets/
+
+# Runtime data and logs
+data/
+backups/
+*.log
+logs/
+
+# Development and testing
 .cache
 .parcel-cache
 

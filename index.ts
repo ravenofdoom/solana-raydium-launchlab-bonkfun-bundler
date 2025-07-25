@@ -1,26 +1,32 @@
-import { Connection, Keypair } from "@solana/web3.js";
+import { Keypair } from "@solana/web3.js";
 import bs58 from "bs58";
-import { RPC_ENDPOINT, PRIVATE_KEY, validateConfig } from "./constants";
+import { PRIVATE_KEY, validateConfig } from "./constants";
 import { createTokenTx, validateTokenParams } from "./src/token";
 import { distributeSol, validateDistributionParams } from "./src/distribute";
 import { makeBuyTx, validateBuyParams } from "./src/buy";
 import { createExtendLut, createLutInst } from "./src/LUT";
 import { sendBundleByLilJit, validateBundle } from "./executor/liljit";
 import { saveLUTFile, saveTransactionLog, logOperation } from "./utils";
+import { getConnectionWithRetry, rpcManager } from "./src/rpcManager";
+import { SecureWalletManager, performSecurityAudit } from "./src/secureWallet";
 
 /**
  * Main entry point for the BonkFun bundler
  */
 const runBundler = async () => {
   console.log("🚀 Starting BonkFun/Raydium Bundler with MEV Protection");
-  console.log("=" .repeat(60));
-  
   try {
+    // Perform security audit first
+    console.log("🔒 Performing security audit...");
+    performSecurityAudit();
+    
     // Validate configuration
     validateConfig();
     validateTokenParams();
     
-    const connection = new Connection(RPC_ENDPOINT, "confirmed");
+    const connection = await getConnectionWithRetry();
+    rpcManager.listEndpoints();
+    
     const mainKp = Keypair.fromSecretKey(bs58.decode(PRIVATE_KEY));
     
     console.log(`💼 Main Wallet: ${mainKp.publicKey.toBase58()}`);
@@ -33,13 +39,15 @@ const runBundler = async () => {
       throw new Error("Insufficient balance. Need at least 5 SOL for bundling operations.");
     }
     
-    // Generate buyer wallets
+    // Initialize secure wallet manager
+    const walletManager = new SecureWalletManager();
     const walletCount = 16;
-    const buyerKeypairs: Keypair[] = [];
     
-    for (let i = 0; i < walletCount; i++) {
-      buyerKeypairs.push(Keypair.generate());
-    }
+    // Generate buyer wallets securely (private keys only in memory)
+    const buyerWalletInfo = walletManager.generateBuyerWallets(walletCount);
+    const buyerKeypairs = walletManager.getAllKeypairs();
+    
+    console.log(`👥 Generated ${buyerKeypairs.length} buyer wallets securely`);
     
     console.log(`👥 Generated ${buyerKeypairs.length} buyer wallets`);
     
@@ -132,13 +140,10 @@ const runBundler = async () => {
       lutAddress: lookupTableAddress.toBase58()
     });
     
-    console.log("\n🎉 Bundle execution completed successfully!");
-    console.log(`📊 Results:`);
-    console.log(`  - Bundle ID: ${bundleId}`);
-    console.log(`  - Token Mint: ${mintKeypair.publicKey.toBase58()}`);
-    console.log(`  - LUT Address: ${lookupTableAddress.toBase58()}`);
-    console.log(`  - Transactions: ${bundleTransactions.length}`);
-    console.log(`  - Buyer Wallets: ${buyerKeypairs.length}`);
+    console.log("\n✅ BonkFun bundler completed successfully!");
+    
+    // Securely clear wallets from memory
+    walletManager.clearWallets();
     
     console.log("\n✅ BonkFun bundler completed successfully!");
     
