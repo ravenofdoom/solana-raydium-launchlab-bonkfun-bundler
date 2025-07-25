@@ -1,124 +1,233 @@
-# 🧪 DEVNET TESTING CONFIGURATION GUIDE
+# 🧪 Complete Testing Guide for BonkFun Bundler
 
-## 📝 Modify these values in your .env file for safe testing
+## ✅ Your Current Configuration
 
-### 1. 🌐 NETWORK CONFIGURATION (Switch to Devnet)
+I can see you've correctly configured your `.env` for devnet testing:
 
-```env
-# Change this line:
-RPC_ENDPOINT=https://api.mainnet-beta.solana.com
+- ✅ **RPC_ENDPOINT**: Set to devnet  
+- ✅ **WALLET_ENCRYPTION_KEY**: Configured for wallet persistence
+- ✅ **All API Keys**: Working endpoints detected
 
-# To this for devnet testing:
-RPC_ENDPOINT=https://api.devnet.solana.com
-```
+## 🎯 Step-by-Step Testing Process
 
-### 2. 💰 TRADING AMOUNTS (Use Tiny Amounts)
-
-```env
-# Current values (for mainnet):
-DISTRIBUTE_WALLET_NUM=8
-DISTRIBUTE_AMOUNTS=0.005
-JITO_TIP_AMOUNT=0.01
-
-# Recommended for devnet testing:
-DISTRIBUTE_WALLET_NUM=4          # Fewer wallets for testing
-DISTRIBUTE_AMOUNTS=0.001         # Very small amount (0.001 SOL)
-JITO_TIP_AMOUNT=0.001           # Smaller tip amount
-```
-
-### 3. 🏷️ TOKEN CONFIGURATION (Change Token Details)
-
-```env
-# Current values:
-TOKEN_NAME=nyvo
-TOKEN_SYMBOL=NYVO
-TOKEN_DECIMALS=9
-TOTAL_SUPPLY=1000000000
-
-# Example for testing:
-TOKEN_NAME=TestCoin
-TOKEN_SYMBOL=TEST
-TOKEN_DECIMALS=9
-TOTAL_SUPPLY=1000000            # Smaller supply for testing
-```
-
-### 4. 🔧 SAFETY SETTINGS (Reduce Risk)
-
-```env
-# Current values:
-RAYDIUM_LP_FEE=0.0025
-SLIPPAGE_TOLERANCE=0.01
-
-# For testing (more conservative):
-RAYDIUM_LP_FEE=0.0025           # Keep same
-SLIPPAGE_TOLERANCE=0.05         # Higher tolerance for testing
-```
-
----
-
-## 📋 **Complete Devnet Testing .env Example:**
-
-```env
-# Solana Configuration - DEVNET
-RPC_ENDPOINT=https://api.devnet.solana.com
-PRIVATE_KEY=your_devnet_wallet_private_key
-
-# RPC Endpoints (your existing ones work)
-HELIUS_RPC_URL=https://mainnet.helius-rpc.com/?api-key=996c379e-5ced-4d60-8099-9fb0ae4f8089
-ANKR_DEVNET_RPC_URL=https://rpc.ankr.com/solana_devnet/e12fe989a2c9c3f6f56080a5ebb8400e1b2f2fa5cb5260f670c398c5e8c70dfb
-
-# Jito Configuration - SMALLER AMOUNTS
-JITO_URL=https://mainnet.block-engine.jito.wtf/api/v1/bundles
-JITO_TIP_AMOUNT=0.001
-
-# Trading Configuration - TESTING AMOUNTS
-DISTRIBUTE_WALLET_NUM=4
-DISTRIBUTE_AMOUNTS=0.001
-
-# Token Configuration - TEST TOKEN
-TOKEN_NAME=TestCoin
-TOKEN_SYMBOL=TEST
-TOKEN_DECIMALS=9
-TOTAL_SUPPLY=1000000
-
-# Raydium Configuration - CONSERVATIVE
-RAYDIUM_LP_FEE=0.0025
-SLIPPAGE_TOLERANCE=0.05
-```
-
----
-
-## 🚨 **IMPORTANT: Get Devnet SOL First!**
-
-Before testing, you need devnet SOL:
+### Step 1: Verify RPC Connectivity
 
 ```bash
-# Get devnet SOL (free)
-solana airdrop 2 YOUR_WALLET_ADDRESS --url devnet
+npm run test-rpc
+```
 
-# Check balance
-solana balance YOUR_WALLET_ADDRESS --url devnet
+**Expected Output:**
+
+- ✅ 5+ working endpoints
+- Response times under 500ms
+- No critical connection failures
+
+**Current Status:** ✅ **PASSED** - 5 working endpoints, fastest 62ms
+
+---
+
+### Step 2: Check Wallet Configuration
+
+```bash
+npm run explain-wallets
+```
+
+**What this shows:**
+
+- Your main wallet address and balance
+- How buyer wallets work
+- Cost breakdown for testing
+- Explorer links for monitoring
+
+**Expected:** Main wallet with sufficient devnet SOL (>0.1 SOL recommended)
+
+---
+
+### Step 3: Run Simple Functionality Test
+
+```bash
+npm run test-simple
+```
+
+**Purpose:** Quick sanity check of basic components
+**Expected:** All basic functions working without errors
+
+---
+
+### Step 4: Main Devnet Bundle Test (The Big One!)
+
+```bash
+npm run devnet
+```
+
+**What happens:**
+
+1. **Session Creation**: Gets unique session ID (e.g., `devnet-1738001567890`)
+2. **Wallet Generation**: Creates 3 encrypted buyer wallets
+3. **SOL Distribution**: Sends SOL to buyer wallets
+4. **Token Creation**: Creates new test token
+5. **Bundle Simulation**: Buyer wallets purchase tokens
+6. **Session Saving**: Encrypts and saves wallets for later
+
+**Expected Output:**
+
+🎯 Bundle Session ID: devnet-1738001567890
+💼 Main Wallet: [your-address]
+👥 Using 3 buyer wallets for devnet session: devnet-1738001567890
+📝 Session ID: devnet-1738001567890
+💡 To sell tokens: npm run sell sell devnet-1738001567890 [token-address]
+✅ Devnet bundler test completed successfully!
+
+**⚠️ SAVE THE SESSION ID!** You'll need it to sell tokens later.
+
+---
+
+### Step 5: Verify Token Balances
+
+```bash
+npm run sell list
+```
+
+**Expected:** Shows your session(s)
+
+```bash
+npm run sell check [SESSION_ID] [TOKEN_MINT_ADDRESS]
+```
+
+**Replace with actual values from Step 4**
+**Expected:** Shows token balances in buyer wallets
+
+---
+
+### Step 6: Sell All Tokens (Test Complete Flow)
+
+```bash
+npm run sell sell [SESSION_ID] [TOKEN_MINT_ADDRESS]
+```
+
+**What happens:**
+
+- Transfers all tokens from buyer wallets to main wallet
+- Shows transaction signatures
+- Provides explorer links
+
+**Expected:** All tokens successfully transferred to main wallet
+
+---
+
+### Step 7: Recover Remaining SOL
+
+```bash
+npm run sell recover [SESSION_ID]
+```
+
+**Purpose:** Get back the SOL from buyer wallets
+**Expected:** SOL transferred back to main wallet
+
+---
+
+## 🔍 Troubleshooting Guide
+
+### Problem: "Insufficient balance"
+
+**Solution:**
+
+```bash
+npm run get-devnet-sol  # Get more devnet SOL
+```
+
+### Problem: "Cannot decrypt wallets"
+
+**Check:** `WALLET_ENCRYPTION_KEY` in your `.env` file
+
+### Problem: "No wallet sessions found"
+
+**Solution:** Run `npm run devnet` first to create a session
+
+### Problem: "RPC connection failed"
+
+**Solution:** Run `npm run test-rpc` and use a different endpoint
+
+---
+
+## 🎉 Success Criteria
+
+### ✅ Complete Success Checklist
+
+- [ ] RPC test passes with 5+ endpoints
+- [ ] Main wallet has sufficient devnet SOL
+- [ ] Devnet bundler runs without errors
+- [ ] Session ID is generated and displayed
+- [ ] Buyer wallets receive tokens
+- [ ] Token selling works correctly
+- [ ] SOL recovery completes
+- [ ] All explorer links work
+
+### 📊 Performance Benchmarks
+
+- **RPC Response**: < 500ms
+- **Bundle Test**: < 2 minutes
+- **Token Transfer**: < 30 seconds per wallet
+
+---
+
+## 🚀 Advanced Testing
+
+### Test Different Scenarios
+
+```bash
+# Test with minimal wallets
+npm run test-minimal
+
+# Analyze RPC performance
+npm run analyze-rpc
+
+# Check specific test results
+npm run check-results
 ```
 
 ---
 
-## 🔄 **Testing Workflow:**
+## 🎯 Ready for Mainnet?
 
-1. **Backup your current .env**
-2. **Modify amounts to tiny values**
-3. **Switch to devnet RPC**
-4. **Get devnet SOL**
-5. **Run test: `npm start`**
-6. **Switch back to mainnet when ready**
+Once all devnet tests pass:
+
+1. **Update .env for mainnet:**
+
+```bash
+   RPC_ENDPOINT=https://api.mainnet-beta.solana.com
+   ```
+
+2. **Verify mainnet balance:**
+   - Need 5+ SOL for full mainnet bundling
+   - Check `JITO_TIP_AMOUNT` and `DISTRIBUTE_AMOUNTS`
+
+3. **Run mainnet bundler:**
+
+   ```bash
+   npm start
+   ```
 
 ---
 
-## ⚡ **Quick Test Values:**
+## 📝 Quick Command Reference
 
-- **DISTRIBUTE_AMOUNTS**: `0.001` (1/5th of current)
-- **DISTRIBUTE_WALLET_NUM**: `4` (half of current)
-- **JITO_TIP_AMOUNT**: `0.001` (1/10th of current)
-- **TOKEN_SYMBOL**: `TEST`
-- **TOTAL_SUPPLY**: `1000000` (1/1000th of current)
+```bash
+# Testing Commands
+npm run test-rpc          # Test network connectivity
+npm run explain-wallets   # Understand wallet system
+npm run devnet           # Main devnet test
+npm run test-simple      # Basic functionality
 
-### This way you test with minimal risk! 🛡️
+# Token Management
+npm run sell list        # List wallet sessions
+npm run sell check <session> <token>  # Check balances
+npm run sell sell <session> <token>   # Sell tokens
+npm run sell recover <session>        # Recover SOL
+
+# Utilities
+npm run get-devnet-sol   # Get devnet SOL
+npm run security-audit   # Security check
+```
+
+**Start with: `npm run test-rpc` and work your way through the steps! 🚀**
