@@ -198,11 +198,11 @@ Once all devnet tests pass:
    RPC_ENDPOINT=https://api.mainnet-beta.solana.com
    ```
 
-2. **Verify mainnet balance:**
+1. **Verify mainnet balance:**
    - Need 5+ SOL for full mainnet bundling
    - Check `JITO_TIP_AMOUNT` and `DISTRIBUTE_AMOUNTS`
 
-3. **Run mainnet bundler:**
+2. **Run mainnet bundler:**
 
    ```bash
    npm start
