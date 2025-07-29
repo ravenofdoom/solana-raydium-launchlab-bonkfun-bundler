@@ -8,7 +8,7 @@ import { distributeSol } from "../src/distribute";
 import { makeBuyTx } from "../src/buy";
 import { createExtendLut, createLutInst } from "../src/LUT";
 import { saveTransactionLog } from "../utils";
-import { WalletManager } from "../src/wallet-manager";
+import { getConnectionWithRetry } from "../src/rpcManager";
 
 // Load environment variables
 require('dotenv').config();
@@ -30,14 +30,8 @@ async function devnetBundler() {
     // Validate configuration
     validateConfig();
     
-    // Initialize connection - Force devnet for testing
-    console.log("🔗 Connecting to Solana devnet...");
-    const devnetEndpoint = process.env.RPC_ENDPOINT || "https://api.devnet.solana.com";
-    const connection = new Connection(devnetEndpoint, {
-      commitment: "confirmed",
-      confirmTransactionInitialTimeout: 60000,
-    });
-    
+    // Initialize connection
+    const connection = await getConnectionWithRetry();
     const slot = await connection.getSlot();
     console.log(`📡 Connected to Solana devnet (slot: ${slot})`);
     
@@ -55,15 +49,16 @@ async function devnetBundler() {
     const sessionId = `devnet-${Date.now()}`;
     console.log(`🎯 Bundle Session ID: ${sessionId}`);
     
-    // Generate buyer wallets for devnet testing (configurable)
-    const numBuyerWallets = parseInt(process.env.DEVNET_BUYER_WALLETS || "3");
-    const buyerKeypairs: Keypair[] = await WalletManager.getBuyerWallets(numBuyerWallets, sessionId);
+    // Generate 3 buyer wallets for devnet testing
+    const buyerKeypairs: Keypair[] = [];
+    for (let i = 0; i < 3; i++) {
+      buyerKeypairs.push(Keypair.generate());
+    }
     
     console.log(`👥 Generated ${buyerKeypairs.length} buyer wallets:`);
-    buyerKeypairs.forEach((kp: Keypair, index: number) => {
+    buyerKeypairs.forEach((kp, index) => {
       console.log(`   Buyer ${index + 1}: ${kp.publicKey.toString()}`);
     });
-    console.log(`🔐 Buyer wallet private keys encrypted and saved for session: ${sessionId}`);
     
     // Create token first
     console.log("\n🪙 Creating Test Token...");
@@ -91,7 +86,7 @@ async function devnetBundler() {
     const [createLutInstruction, lookupTableAddress] = AddressLookupTableProgram.createLookupTable({
       authority: mainWallet.publicKey,
       payer: mainWallet.publicKey,
-      recentSlot: await connection.getSlot() - 1, // Use a slightly older slot to ensure it's "recent"
+      recentSlot: await connection.getSlot(),
     });
     
     const lutTx = await createLutInst(
@@ -114,7 +109,7 @@ async function devnetBundler() {
     await connection.confirmTransaction(lutSignature, "confirmed");
     
     // Extend LUT with buyer addresses and token mint
-    const buyerPubkeys = buyerKeypairs.map((kp: Keypair) => kp.publicKey);
+    const buyerPubkeys = buyerKeypairs.map(kp => kp.publicKey);
     const extendTx = await createExtendLut(
       connection,
       mainWallet,
@@ -134,12 +129,11 @@ async function devnetBundler() {
     
     // Distribute SOL to buyer wallets
     console.log("\n💸 Distributing SOL to buyer wallets...");
-    const solPerWallet = parseFloat(process.env.DEVNET_SOL_PER_WALLET || "0.005");
     const distributeTxs = await distributeSol(
       connection,
       mainWallet,
       buyerKeypairs,
-      solPerWallet // Configurable SOL per wallet for devnet
+      0.001 // 0.001 SOL per wallet for devnet
     );
     
     // Send all distribution transactions
@@ -157,13 +151,12 @@ async function devnetBundler() {
     
     // Create buy transactions
     console.log("\n🛒 Creating buy transactions...");
-    const buyAmount = parseFloat(process.env.DEVNET_BUY_AMOUNT || "0.0005");
     const { transactions: buyTxs } = await makeBuyTx(
       connection,
       tokenKeypair,
       buyerKeypairs,
       lookupTableAddress,
-      buyAmount // Configurable purchase amount for devnet
+      0.0005 // Small purchase amount for devnet
     );
     
     // Execute buy transactions
@@ -220,7 +213,7 @@ async function devnetBundler() {
     const sessionData = {
       sessionId,
       tokenMint: tokenKeypair.publicKey.toString(),
-      buyerWallets: buyerKeypairs.map((kp: Keypair) => kp.publicKey.toString()),
+      buyerWallets: buyerKeypairs.map(kp => kp.publicKey.toString()),
       transactions: transactionResults,
       network: "devnet",
       timestamp: new Date().toISOString()

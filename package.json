@@ -25,6 +25,8 @@
     "get-devnet-sol": "node scripts/get-devnet-sol.js",
     "explain-wallets": "node scripts/explain-wallets.js",
     "sell": "ts-node src/token-seller.ts",
+    "devnet-sell": "ts-node tests/devnet-token-seller.ts",
+    "devnet-sell-bundle": "ts-node tests/devnet-bundle-seller.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {

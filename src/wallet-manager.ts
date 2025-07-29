@@ -9,7 +9,14 @@ import bs58 from "bs58";
  */
 export class WalletManager {
   private static WALLETS_DIR = path.join(process.cwd(), "wallets");
-  private static ENCRYPTION_KEY = process.env.WALLET_ENCRYPTION_KEY || "";
+
+  static getEncryptionKey(): string {
+    const key = process.env.WALLET_ENCRYPTION_KEY || "";
+    if (!key) {
+      throw new Error("WALLET_ENCRYPTION_KEY not found in environment variables");
+    }
+    return key;
+  }
 
   static async ensureWalletsDir(): Promise<void> {
     if (!fs.existsSync(this.WALLETS_DIR)) {
@@ -65,11 +72,11 @@ export class WalletManager {
         console.log(`📂 Loading existing buyer wallets for session: ${sessionId}`);
         const encryptedData = fs.readFileSync(walletsFile, 'utf8');
         
-        if (!this.ENCRYPTION_KEY) {
+        if (!this.getEncryptionKey()) {
           throw new Error("WALLET_ENCRYPTION_KEY required in .env to decrypt wallets");
         }
         
-        const decryptedData = this.decrypt(encryptedData, this.ENCRYPTION_KEY);
+        const decryptedData = this.decrypt(encryptedData, this.getEncryptionKey());
         const walletData = JSON.parse(decryptedData);
         
         return walletData.privateKeys.map((pk: string) => 
@@ -94,7 +101,7 @@ export class WalletManager {
     }
 
     // Save wallets (encrypted)
-    if (this.ENCRYPTION_KEY) {
+    if (this.getEncryptionKey()) {
       const walletData = {
         sessionId,
         createdAt: new Date().toISOString(),
@@ -102,7 +109,7 @@ export class WalletManager {
         privateKeys: privateKeys
       };
 
-      const encryptedData = this.encrypt(JSON.stringify(walletData), this.ENCRYPTION_KEY);
+      const encryptedData = this.encrypt(JSON.stringify(walletData), this.getEncryptionKey());
       fs.writeFileSync(walletsFile, encryptedData);
       
       console.log(`💾 Buyer wallets saved (encrypted) to: ${walletsFile}`);
