@@ -1,6 +1,7 @@
 import { Connection, Keypair, clusterApiUrl } from '@solana/web3.js';
 import { BundleLauncher } from './src/bundle-launcher';
 import { WalletManager } from './src/wallet-manager';
+import bs58 from 'bs58';
 import 'dotenv/config';
 
 async function testRealTokenCreation() {
@@ -12,10 +13,11 @@ async function testRealTokenCreation() {
   
   console.log(`🌐 Connected to: ${endpoint}`);
 
-  // Create a temporary launcher wallet for testing
-  const launcherWallet = Keypair.generate();
+  // Use the correct main wallet with existing SOL
+  const mainWalletPrivateKey = process.env.PRIVATE_KEY!;
+  const launcherWallet = Keypair.fromSecretKey(bs58.decode(mainWalletPrivateKey));
   
-  console.log(`👤 Launcher wallet: ${launcherWallet.publicKey.toString()}`);
+  console.log(`👤 Main launcher wallet: ${launcherWallet.publicKey.toString()}`);
 
   // Check launcher balance
   const balance = await connection.getBalance(launcherWallet.publicKey);
