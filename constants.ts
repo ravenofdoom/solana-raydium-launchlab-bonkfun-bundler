@@ -49,5 +49,5 @@ export const validateConfig = () => {
     }
   }
 
-  console.log("Configuration validated successfully");
+  console.log("✅ Configuration validated successfully");
 };

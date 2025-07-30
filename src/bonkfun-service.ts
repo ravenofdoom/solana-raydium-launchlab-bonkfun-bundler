@@ -61,12 +61,10 @@ interface BonkFunBuyParams {
 export class BonkFunService {
   private connection: Connection;
   private mode: 'classic' | 'tech';
-  private bonkFunProgramId: PublicKey;
 
   constructor(connection: Connection, mode: 'classic' | 'tech' = 'tech') {
     this.connection = connection;
     this.mode = mode;
-    this.bonkFunProgramId = RAYDIUM_LAUNCHPAD_PROGRAM_ID;
   }
 
   /**
@@ -85,175 +83,25 @@ export class BonkFunService {
 
   /**
    * Launch a token on BonkFun Tech mode (Raydium Launchpad)
-   * NOW IMPLEMENTS REAL TOKEN CREATION
    */
   async launchTokenTech(
     payer: Keypair,
     params: BonkFunLaunchParams
   ): Promise<{ tokenMint: PublicKey; signature: string }> {
-    console.log('🚀 Launching NEW BonkFun token in Tech mode (Raydium Launchpad)...');
+    console.log('🚀 Launching token in BonkFun Tech mode (Raydium Launchpad)...');
+    
+    // For now, use example token since launching requires complex token creation
+    // In production, this would need proper token creation on Raydium Launchpad
+    console.log('⚠️  Using example token for testing - implement actual launch later');
     console.log(`📄 Token Name: ${params.tokenName}`);
     console.log(`🔤 Token Symbol: ${params.tokenSymbol}`);
-    console.log(`🔢 Decimals: ${params.decimals}`);
-    console.log(`📊 Total Supply: ${params.totalSupply.toLocaleString()}`);
+    console.log(`🏠 Example Mint: ${EXAMPLE_TOKEN_MINT.toString()}`);
     
-    try {
-      // Step 1: Create the token mint
-      const tokenMint = Keypair.generate();
-      console.log(`🏠 New Token Mint: ${tokenMint.publicKey.toString()}`);
-      
-      // Step 2: Create instructions for token creation
-      const instructions: TransactionInstruction[] = [];
-      
-      // Get rent exemption amount for mint account
-      const mintRentExemption = await this.connection.getMinimumBalanceForRentExemption(82); // MINT_SIZE
-      
-      // Create mint account
-      instructions.push(
-        SystemProgram.createAccount({
-          fromPubkey: payer.publicKey,
-          newAccountPubkey: tokenMint.publicKey,
-          lamports: mintRentExemption,
-          space: 82, // MINT_SIZE
-          programId: TOKEN_PROGRAM_ID,
-        })
-      );
-      
-      // Initialize mint
-      const { createInitializeMintInstruction } = await import('@solana/spl-token');
-      instructions.push(
-        createInitializeMintInstruction(
-          tokenMint.publicKey,
-          params.decimals,
-          payer.publicKey, // mint authority
-          payer.publicKey  // freeze authority
-        )
-      );
-      
-      // Step 3: Create associated token account for the payer
-      const payerTokenAccount = await getAssociatedTokenAddress(
-        tokenMint.publicKey,
-        payer.publicKey
-      );
-      
-      instructions.push(
-        createAssociatedTokenAccountInstruction(
-          payer.publicKey, // payer
-          payerTokenAccount, // ata
-          payer.publicKey, // owner
-          tokenMint.publicKey // mint
-        )
-      );
-      
-      // Step 4: Mint initial supply to payer
-      const { createMintToInstruction } = await import('@solana/spl-token');
-      const mintAmount = new BN(params.totalSupply).mul(new BN(10).pow(new BN(params.decimals)));
-      
-      instructions.push(
-        createMintToInstruction(
-          tokenMint.publicKey,
-          payerTokenAccount,
-          payer.publicKey,
-          BigInt(mintAmount.toString())
-        )
-      );
-      
-      // Step 5: Add BonkFun/Raydium Launchpad registration instruction
-      // This creates the pool and registers the token on BonkFun
-      const poolRegistrationInstruction = await this.createBonkFunPoolRegistrationInstruction(
-        payer.publicKey,
-        tokenMint.publicKey,
-        params
-      );
-      
-      instructions.push(poolRegistrationInstruction);
-      
-      // Step 6: Create transaction and send
-      const transaction = new Transaction().add(...instructions);
-      transaction.feePayer = payer.publicKey;
-      
-      const signature = await sendAndConfirmTransaction(
-        this.connection,
-        transaction,
-        [payer, tokenMint],
-        { commitment: 'confirmed' }
-      );
-      
-      console.log(`✅ BonkFun token launched successfully!`);
-      console.log(`🔗 Transaction: https://explorer.solana.com/tx/${signature}?cluster=${this.connection.rpcEndpoint.includes('devnet') ? 'devnet' : 'mainnet-beta'}`);
-      console.log(`🏠 Token: https://explorer.solana.com/address/${tokenMint.publicKey.toString()}?cluster=${this.connection.rpcEndpoint.includes('devnet') ? 'devnet' : 'mainnet-beta'}`);
-      
-      return {
-        tokenMint: tokenMint.publicKey,
-        signature
-      };
-      
-    } catch (error) {
-      console.error('❌ Error launching BonkFun token:', error);
-      throw new Error(`Failed to launch BonkFun token: ${error instanceof Error ? error.message : String(error)}`);
-    }
-  }
-
-  /**
-   * Create BonkFun pool registration instruction for Raydium Launchpad
-   */
-  private async createBonkFunPoolRegistrationInstruction(
-    payer: PublicKey,
-    tokenMint: PublicKey,
-    params: BonkFunLaunchParams
-  ): Promise<TransactionInstruction> {
-    console.log('🏊 Creating BonkFun pool registration instruction...');
-    
-    // Derive pool state PDA based on token mint
-    const [poolState] = PublicKey.findProgramAddressSync(
-      [Buffer.from('pool'), tokenMint.toBuffer()],
-      this.bonkFunProgramId
-    );
-    
-    // Derive base vault (token vault)
-    const [baseVault] = PublicKey.findProgramAddressSync(
-      [Buffer.from('base_vault'), poolState.toBuffer()],
-      this.bonkFunProgramId
-    );
-    
-    // Derive quote vault (SOL vault)
-    const [quoteVault] = PublicKey.findProgramAddressSync(
-      [Buffer.from('quote_vault'), poolState.toBuffer()],
-      this.bonkFunProgramId
-    );
-    
-    console.log(`🏊 Pool State: ${poolState.toString()}`);
-    console.log(`📦 Base Vault: ${baseVault.toString()}`);
-    console.log(`💰 Quote Vault: ${quoteVault.toString()}`);
-    
-    // Create instruction data for pool initialization
-    // This is based on the BonkFun/Raydium program structure
-    const instructionData = Buffer.concat([
-      Buffer.from([0x01]), // Initialize pool discriminator
-      Buffer.from(params.tokenName.padEnd(32, '\0'), 'utf8').slice(0, 32), // Token name (32 bytes)
-      Buffer.from(params.tokenSymbol.padEnd(16, '\0'), 'utf8').slice(0, 16), // Token symbol (16 bytes)
-      new BN(params.decimals).toBuffer('le', 1), // Decimals (1 byte)
-      new BN(params.totalSupply).toBuffer('le', 8), // Total supply (8 bytes)
-    ]);
-    
-    // Create the pool registration instruction
-    return new TransactionInstruction({
-      programId: this.bonkFunProgramId,
-      keys: [
-        { pubkey: payer, isSigner: true, isWritable: true }, // payer
-        { pubkey: tokenMint, isSigner: false, isWritable: false }, // token mint
-        { pubkey: poolState, isSigner: false, isWritable: true }, // pool state
-        { pubkey: baseVault, isSigner: false, isWritable: true }, // base vault
-        { pubkey: quoteVault, isSigner: false, isWritable: true }, // quote vault
-        { pubkey: RAYDIUM_AUTHORITY, isSigner: false, isWritable: false }, // authority
-        { pubkey: GLOBAL_CONFIG, isSigner: false, isWritable: false }, // global config
-        { pubkey: PLATFORM_CONFIG, isSigner: false, isWritable: false }, // platform config
-        { pubkey: EVENT_AUTHORITY, isSigner: false, isWritable: false }, // event authority
-        { pubkey: SystemProgram.programId, isSigner: false, isWritable: false }, // system program
-        { pubkey: TOKEN_PROGRAM_ID, isSigner: false, isWritable: false }, // token program
-      ],
-      data: instructionData,
-    });
+    // Return example token for testing bundle buys
+    return {
+      tokenMint: EXAMPLE_TOKEN_MINT,
+      signature: 'using_example_token_' + Date.now()
+    };
   }
 
   /**
