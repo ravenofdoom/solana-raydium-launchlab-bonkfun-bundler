@@ -29,6 +29,12 @@
     "devnet-sell-bundle": "ts-node tests/devnet-bundle-seller.ts",
     "bundle-launch": "ts-node tests/test-bundle-launch.ts",
     "test-bonkfun": "ts-node tests/test-real-bonkfun.ts",
+    "test-mainnet-bundle": "ts-node tests/test-mainnet-bundle.ts",
+    "access-wallets": "ts-node tests/access-bundle-wallets.ts",
+    "demo": "ts-node demo.ts",
+    "test:bundle": "ts-node test-bonkfun-bundle.ts",
+    "test-real": "ts-node test-real-token-creation.ts",
+    "recover-funds": "ts-node recover-funds.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {

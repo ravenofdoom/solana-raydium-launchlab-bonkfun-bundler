@@ -89,19 +89,22 @@ npm run test-real           # Full integration test
 ## ⚠️ RECENT FIXES APPLIED
 
 ### 1. Buy Amount Issue Fixed
+
 - ❌ **Problem**: Buy amount was 0.001 SOL (below 0.005 SOL minimum)
 - ✅ **Fixed**: Updated .env to use 0.006+ SOL amounts
-- 🔧 **Changes**: 
+- 🔧 **Changes**:
   - `DISTRIBUTE_AMOUNTS=0.006` (was 0.001)
   - `BONKFUN_BUNDLE_SOL_PER_WALLET=0.008` (was 0.005)
   - `BONKFUN_BUNDLE_BUY_AMOUNT=0.006` (was 0.005)
 
 ### 2. Token Address Updated
+
 - ❌ **Problem**: Using non-existent token `8FHv4qjU2U9WBK7hCENK1e89bQTajstPzW6qPLweLBNr`
 - ✅ **Fixed**: Now using real BonkFun token `8dqNN3h1Da5QTXW419oJrYfLAM2u13kCqLkRHdufbonk`
-- 🔗 **Source**: https://raydium.io/launchpad/token/?mint=8dqNN3h1Da5QTXW419oJrYfLAM2u13kCqLkRHdufbonk
+- 🔗 **Source**: <https://raydium.io/launchpad/token/?mint=8dqNN3h1Da5QTXW419oJrYfLAM2u13kCqLkRHdufbonk>
 
 ### 3. Fund Recovery Available
+
 - ✅ **Added**: `npm run recover-funds` script to reclaim SOL from failed tests
 - 📋 **Usage**: `npm run recover-funds bundle_TBONK6928_1753870306975`
 
