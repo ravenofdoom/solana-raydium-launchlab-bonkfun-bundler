@@ -1,73 +1,102 @@
 # 🧪 Tests Directory
 
-This folder contains all testing utilities and test scripts for the BonkFun Bundler project.
+This directory contains all test files for the BonkFun Bundler project.
 
-## 📋 Available Tests
+## 📋 Test Categories
 
-### Core Tests
+### Core Bundle Testing
 
-- **`devnet-bundler.ts`** - Complete devnet bundler test (main test runner)
-- **`test-devnet.ts`** - Additional devnet-specific tests
-- **`simple-test.js`** - Basic functionality tests
-- **`minimal-test.js`** - Minimal bundler test
+- **`test-real-bonkfun.ts`** - Main BonkFun integration tests
+- **`test-mainnet-bundle.ts`** - Mainnet bundle operations testing
+- **`test-bundle-launch.ts`** - Bundle launch functionality tests
 
-### Network & RPC Tests
+### Devnet Testing
 
-- **`test-rpc.js`** - RPC endpoint connectivity and performance tests
-- **`analyze-rpc.js`** - Detailed RPC analysis and benchmarking
+- **`devnet-bundler.ts`** - Devnet bundler implementation
+- **`devnet-bundler-fixed.ts`** - Fixed version of devnet bundler
+- **`test-devnet.ts`** - General devnet testing
+- **`test-devnet-bundle-creation.ts`** - Devnet bundle creation tests
 
-### Utilities
+### Token Management
 
-- **`check-results.js`** - Test result verification and analysis
+- **`devnet-bundle-seller.ts`** - Token selling from bundle wallets
+- **`devnet-token-seller.ts`** - General token selling utilities
 
-## 🚀 Usage
+### SOL & Wallet Management
 
-All tests can be run using npm scripts:
+- **`collect-sol-from-wallets.ts`** - ⚠️ DEPRECATED - Use `scripts/working-collection.ts` instead
+- **`quick-collect-sol.ts`** - Quick SOL collection utility
+- **`quick-collect.ts`** - Fast collection methods
+- **`access-bundle-wallets.ts`** - Wallet access utilities
+
+### Utility Tests
+
+- **`check-balance.ts`** - Balance checking utilities
+- **`gather.ts`** - Wallet gathering operations
+- **`closeWsol.ts`** - Wrapped SOL account closure
+- **`closeLut.ts`** - Lookup table closure
+- **`index.ts`** - Test entry point
+
+## 🚀 Running Tests
+
+### Main Test Scripts
 
 ```bash
-# Main devnet testing
-npm run devnet              # Complete devnet bundler test (RECOMMENDED)
-npm run test-devnet         # Additional devnet tests
+# Main working tests (recommended)
+npm run test-real           # Main real token test
+npm run demo                # Show current functionality
+npm run test:bundle         # BonkFun bundle testing
 
-# Network testing
-npm run test-rpc            # Test RPC endpoints
-npm run analyze-rpc         # Analyze RPC performance
-
-# Simple tests
-npm run test-simple         # Basic functionality test
-npm run test-minimal        # Minimal test
-
-# Result checking
-npm run check-results       # Check test results
+# Devnet tests
+npm run devnet              # Devnet bundler testing
+npm run test-devnet         # General devnet tests
 ```
 
-## 🎯 Recommended Testing Order
+### Manual Test Execution
 
-1. **RPC Testing**: `npm run test-rpc` - Verify your network connectivity
-2. **Simple Test**: `npm run test-simple` - Basic functionality check
-3. **Main Devnet Test**: `npm run devnet` - Complete bundler test
-4. **Result Analysis**: `npm run check-results` - Verify outcomes
+```bash
+# Direct test execution
+npx ts-node tests/test-real-bonkfun.ts
+npx ts-node tests/test-mainnet-bundle.ts
+npx ts-node tests/devnet-bundler.ts
+```
 
-## 🧪 Testing Strategy
+## ⚠️ Important Notes
 
-### 1. Devnet Testing (Primary)
+### SOL Recovery
 
-- **Purpose**: Safe testing without real money or mainnet risks
-- **Features**: All bundler functionality except Jito bundling
-- **Command**: `npm run devnet`
-- **Requirements**: Devnet SOL (automatic via faucet)
+- **DO NOT USE** `tests/collect-sol-from-wallets.ts` - it's deprecated
+- **USE INSTEAD** `scripts/working-collection.ts` - the working version
+- The working script properly handles:
+  - AES-256-GCM decryption
+  - Rent exemption calculations
+  - Safe SOL transfers
 
-### 2. RPC Testing
+### Test Data
 
-- **Purpose**: Verify RPC endpoint connectivity and performance
-- **Command**: `npm run test-rpc`
-- **Tests**: Connection speed, reliability, API availability
+All test files may create session data in the `/wallets/` directory. Use the SOL recovery script to reclaim funds after testing.
 
-### 3. Component Testing
+## 📊 Test Status
 
-- **Purpose**: Test individual components and utilities
-- **Commands**: `npm run test-simple`, `npm run test-minimal`
+### ✅ Working Tests
+
+- `test-real-bonkfun.ts` - Bundle buying with existing tokens
+- `devnet-bundler.ts` - Devnet bundle operations
+- SOL recovery via `scripts/working-collection.ts`
+
+### ⚠️ Known Issues
+
+- BonkFun token creation blocked by program interface issues
+- Some legacy test files may have compilation errors
+
+### 🔧 Maintenance
+
+Regular cleanup recommended:
+
+1. Run SOL recovery after failed tests
+2. Clean up old session files in `/wallets/`
+3. Use the working collection script for fund recovery
 
 ## 📁 Organization
 
-All test files are organized here to keep the project root clean while maintaining easy access through npm commands. Test paths are properly configured in `package.json`.
+Tests are separated from core scripts to maintain a clean project structure. All test utilities and experiments are contained within this directory.

@@ -2,7 +2,7 @@ import { Keypair } from "@solana/web3.js";
 import * as fs from "fs";
 import * as path from "path";
 import * as crypto from "crypto";
-import bs58 from "bs58";
+import * as bs58 from "bs58";
 
 /**
  * Secure Wallet Manager with persistence for selling tokens later

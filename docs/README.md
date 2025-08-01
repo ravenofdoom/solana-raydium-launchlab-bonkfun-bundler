@@ -1,36 +1,40 @@
-# 📚 Documentation
+# 📚 BonkFun Bundler Documentation
 
-This folder contains comprehensive documentation for the BonkFun Bundler project.
+This directory contains all documentation for the BonkFun/Raydium Launchpad bundler project.
 
-## 📖 Available Guides
+## 📖 Documentation Files
 
-- **[WALLET-MANAGEMENT.md](./WALLET-MANAGEMENT.md)** - Complete guide on wallet persistence and token selling
+### 🎯 Current Status & Usage
+- **[STATUS.md](STATUS.md)** - Current project status, available scripts, and functionality overview
+- **[BONKFUN-FIXES.md](BONKFUN-FIXES.md)** - Latest TypeScript and SOL funding fixes applied
+- **[CLEANUP-COMPLETE.md](CLEANUP-COMPLETE.md)** - Documentation organization and cleanup summary
+
+### 📋 Setup & Configuration  
+- **[SETUP.md](SETUP.md)** - Initial project setup and configuration guide
+- **[USAGE.md](USAGE.md)** - How to use the bundler for token operations
+
+### 🧪 Testing & Development
+- **[TESTING-GUIDE.md](TESTING-GUIDE.md)** - Comprehensive testing procedures and examples
+- **[DEVNET-TESTING.md](DEVNET-TESTING.md)** - Safe devnet testing without risking real SOL
+- **[DEVNET-BUNDLE-SELLING.md](DEVNET-BUNDLE-SELLING.md)** - Cleanup and SOL recovery after devnet tests
+- **[DEVELOPMENT.md](DEVELOPMENT.md)** - Development workflows and contribution guidelines
+
+### 🔒 Security & Management
+- **[SECURITY.md](SECURITY.md)** - Security considerations and best practices  
+- **[WALLET-MANAGEMENT.md](WALLET-MANAGEMENT.md)** - Wallet encryption and management system
 
 ## 🚀 Quick Start
 
-1. **Understand the wallet system**: Read the wallet management guide
-2. **Set up encryption**: Configure `WALLET_ENCRYPTION_KEY` in `.env`
-3. **Test on devnet**: Run `npm run devnet` to test the bundler
-4. **Sell tokens**: Use `npm run sell` commands to manage your tokens
+1. **Check Current Status**: Read [STATUS.md](STATUS.md) first
+2. **Setup Project**: Follow [SETUP.md](SETUP.md) for initial configuration
+3. **Test Script**: Use the ready-to-test BonkFun bundle script from STATUS.md
+4. **Security**: Review [SECURITY.md](SECURITY.md) for safe operation
 
-## 🔗 Key Commands
+## 📈 Project State
 
-```bash
-# Test on devnet
-npm run devnet
+✅ **TypeScript compilation issues resolved**  
+✅ **SOL funding for wrapped SOL accounts fixed**  
+✅ **Documentation organized and cleaned up**  
+✅ **Ready for BonkFun bundle testing**
 
-# Check wallet sessions
-npm run sell list
-
-# Sell tokens from a session
-npm run sell sell <sessionId> <tokenMint>
-
-# Recover SOL from buyer wallets
-npm run sell recover <sessionId>
-```
-
-## 🆘 Need Help?
-
-- Check the wallet management guide for detailed instructions
-- Run `npm run explain-wallets` for a live explanation of the wallet system
-- All commands provide explorer links for easy monitoring
+See [STATUS.md](STATUS.md) for the most current information.
