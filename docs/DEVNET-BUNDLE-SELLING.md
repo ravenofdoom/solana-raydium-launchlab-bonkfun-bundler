@@ -24,19 +24,23 @@ npx ts-node tests/devnet-token-seller.ts
 ## 🎯 Bundle Selling Workflow
 
 ### 1. Automatic Token Discovery
+
 The bundle seller automatically:
+
 - Scans all buyer wallets from the last session
 - Identifies tokens with non-zero balances
 - Calculates total tokens available for selling
 - Estimates potential SOL recovery
 
 ### 2. Batch Selling Process
+
 ```bash
 # Run the bundle seller
 npx ts-node tests/devnet-bundle-seller.ts
 ```
 
 **Process:**
+
 1. **Wallet Scanning**: Finds all buyer wallets with tokens
 2. **Balance Check**: Verifies token and SOL balances
 3. **Sell Transactions**: Creates sell transactions for each wallet
@@ -44,13 +48,12 @@ npx ts-node tests/devnet-bundle-seller.ts
 5. **Cleanup**: Consolidates everything to main wallet
 
 ### 3. Expected Output
-```
+
 🔍 Scanning buyer wallets for tokens...
 📊 Found 16 wallets with tokens:
    • Wallet 1: 45,678 DTT tokens (0.001 SOL)
    • Wallet 2: 45,678 DTT tokens (0.001 SOL)
    • [...]
-   
 💰 Total tokens to sell: 731,248 DTT
 💸 Estimated SOL recovery: 0.015 SOL
 
@@ -69,11 +72,11 @@ npx ts-node tests/devnet-bundle-seller.ts
    • Tokens sold: 731,248 DTT
    • SOL recovered: 0.0144 SOL
    • Main wallet balance: 0.0956 SOL (+0.0144)
-```
 
 ## ⚙️ Configuration
 
 ### Environment Variables
+
 ```env
 # Ensure devnet mode
 RPC_ENDPOINT=https://api.devnet.solana.com
@@ -85,7 +88,9 @@ MAX_RETRIES=3               # Retry failed transactions
 ```
 
 ### Wallet Management
+
 The script uses the same encrypted wallet system:
+
 ```typescript
 // Automatically loads buyer wallets from last session
 const buyerWallets = await WalletManager.getBuyerWallets(16, sessionId);
@@ -94,6 +99,7 @@ const buyerWallets = await WalletManager.getBuyerWallets(16, sessionId);
 ## 🔍 Testing Scenarios
 
 ### Scenario 1: Complete Test Cycle
+
 ```bash
 # 1. Create tokens and buy
 npx ts-node tests/devnet-bundler-fixed.ts
@@ -103,6 +109,7 @@ npx ts-node tests/devnet-bundle-seller.ts
 ```
 
 ### Scenario 2: Partial Selling
+
 ```bash
 # Sell only specific wallets or amounts
 # (modify script parameters as needed)
@@ -110,7 +117,9 @@ npx ts-node tests/devnet-bundle-seller.ts
 ```
 
 ### Scenario 3: Multiple Token Cleanup
+
 If you have multiple test tokens from different sessions:
+
 ```bash
 # Run bundle seller multiple times
 # Or modify script to handle multiple tokens
@@ -119,12 +128,14 @@ If you have multiple test tokens from different sessions:
 ## 📊 Performance Metrics
 
 ### Typical Selling Performance
+
 - **Transaction Speed**: ~1-2 seconds per wallet
 - **Success Rate**: >95% with retries
 - **SOL Recovery**: ~80-90% (after transaction fees)
 - **Total Time**: ~30-60 seconds for 16 wallets
 
 ### Gas Costs (Devnet)
+
 - **Sell Transaction**: ~0.000005 SOL per transaction
 - **SOL Transfer**: ~0.000005 SOL per transfer
 - **Total Fees**: ~0.00016 SOL for 16 wallets
@@ -132,18 +143,21 @@ If you have multiple test tokens from different sessions:
 ## ⚠️ Important Considerations
 
 ### Devnet Specific
+
 - **No Real Value**: Devnet tokens have no monetary value
 - **Network Resets**: Tokens may disappear during devnet resets  
 - **Rate Limits**: Devnet may have transaction rate limits
 - **Different Liquidity**: Devnet pools behave differently than mainnet
 
 ### Error Handling
+
 - **"No tokens found"**: Wallets may already be empty or session invalid
 - **"Insufficient liquidity"**: Pool may not have enough SOL for all sells
 - **"Transaction failed"**: Network issues or slippage too high
 - **"Wallet not found"**: Session file may be corrupted or missing
 
 ### Best Practices
+
 - **Run after testing**: Always clean up test tokens
 - **Monitor results**: Check that SOL is properly recovered
 - **Verify balances**: Ensure main wallet received expected SOL
@@ -155,24 +169,28 @@ If you have multiple test tokens from different sessions:
 ### Common Issues
 
 #### Issue: "No buyer wallets found"
+
 ```bash
 # Solution: Check session ID and wallet files
 ls wallets/buyers-*.json
 ```
 
 #### Issue: "Insufficient token balance"  
+
 ```bash
 # Solution: Verify tokens exist in wallets
 # Check if tokens were already sold or transferred
 ```
 
 #### Issue: "Sell transaction failed"
+
 ```bash
 # Solution: Check devnet connection and pool liquidity
 # Try reducing selling amounts or increasing slippage
 ```
 
 #### Issue: "SOL recovery incomplete"
+
 ```bash
 # Solution: Run SOL recovery separately
 npx ts-node scripts/working-collection.ts [session-id]
@@ -181,6 +199,7 @@ npx ts-node scripts/working-collection.ts [session-id]
 ## 🚀 Advanced Usage
 
 ### Custom Selling Strategy
+
 ```typescript
 // Modify devnet-bundle-seller.ts for custom logic:
 // - Sell only profitable positions
@@ -190,6 +209,7 @@ npx ts-node scripts/working-collection.ts [session-id]
 ```
 
 ### Integration with Testing
+
 ```bash
 # Automated test cycle
 npm run test-devnet-cycle() {

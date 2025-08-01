@@ -167,6 +167,7 @@ Current setup in `.env`:
 - ✅ **Bundle parameters** configured
 
 ### Devnet Testing Configuration
+
 ```env
 # Switch to devnet for safe testing
 RPC_ENDPOINT=https://api.devnet.solana.com
@@ -178,6 +179,7 @@ DEVNET_BUY_AMOUNT=0.001
 ```
 
 ### Mainnet Configuration (Current)
+
 ```env  
 # Mainnet with fixed SOL amounts
 BONKFUN_BUNDLE_SOL_PER_WALLET=0.015  # Increased for wrapped SOL
