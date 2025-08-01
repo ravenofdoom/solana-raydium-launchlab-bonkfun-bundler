@@ -202,6 +202,92 @@ export class BonkFunService {
   }
 
   /**
+   * Get pool information for a specific token mint
+   * This needs to be implemented to fetch the correct pool addresses
+   */
+  private async getPoolInfo(tokenMint: PublicKey): Promise<{
+    poolState: PublicKey;
+    baseVault: PublicKey;
+    quoteVault: PublicKey;
+  }> {
+    // For now, we'll derive the pool addresses based on the token mint
+    // In the future, this should fetch from Raydium API or derive using the correct seeds
+    
+    // Check if this is one of our known tokens with working pool addresses
+    const knownTokens = new Map([
+      ['8dqNN3h1Da5QTXW419oJrYfLAM2u13kCqLkRHdufbonk', {
+        poolState: new PublicKey('DhS1tg8pQMoNW4Twz8jgT3uzwtMA9iKACYWtinG9EtnD'),
+        baseVault: new PublicKey('2zzfnjmjKVC5wy2jp8FUNNLMdaNFQAMZDLVAJR8n6vuP'),
+        quoteVault: new PublicKey('EjgDLhFmVNUnXGktvHF8Y1oTYPAuxD1gbc2WCAvC2eSs'),
+      }],
+      ['Gnth6Qhb9ChRGcE2bx2FJM4TSCk6KRMKF3U3AnFJbonk', {
+        // We need to find these addresses for the new token
+        // For now, we'll try to derive them or use a placeholder that will fail gracefully
+        poolState: new PublicKey('11111111111111111111111111111111'), // placeholder
+        baseVault: new PublicKey('11111111111111111111111111111111'), // placeholder
+        quoteVault: new PublicKey('11111111111111111111111111111111'), // placeholder
+      }]
+    ]);
+    
+    const tokenKey = tokenMint.toString();
+    const poolInfo = knownTokens.get(tokenKey);
+    
+    if (poolInfo && poolInfo.poolState.toString() !== '11111111111111111111111111111111') {
+      return poolInfo;
+    }
+    
+    // If we don't have the pool info, we need to derive it
+    // This is where we would implement pool address derivation
+    console.log(`⚠️  Warning: Pool addresses for token ${tokenKey} not found in known tokens`);
+    console.log(`🔍 Attempting to derive pool addresses...`);
+    
+    // Try to derive pool addresses (this is a simplified approach)
+    // In reality, we'd need to use the correct seeds and PDA derivation
+    try {
+      const [poolStatePDA] = await PublicKey.findProgramAddress(
+        [
+          Buffer.from('pool'),
+          tokenMint.toBuffer(),
+          NATIVE_MINT.toBuffer(),
+        ],
+        RAYDIUM_LAUNCHPAD_PROGRAM_ID
+      );
+      
+      const [baseVaultPDA] = await PublicKey.findProgramAddress(
+        [
+          Buffer.from('vault'),
+          poolStatePDA.toBuffer(),
+          tokenMint.toBuffer(),
+        ],
+        RAYDIUM_LAUNCHPAD_PROGRAM_ID
+      );
+      
+      const [quoteVaultPDA] = await PublicKey.findProgramAddress(
+        [
+          Buffer.from('vault'),
+          poolStatePDA.toBuffer(),
+          NATIVE_MINT.toBuffer(),
+        ],
+        RAYDIUM_LAUNCHPAD_PROGRAM_ID
+      );
+      
+      console.log(`🎯 Derived pool addresses:`);
+      console.log(`   Pool State: ${poolStatePDA.toString()}`);
+      console.log(`   Base Vault: ${baseVaultPDA.toString()}`);
+      console.log(`   Quote Vault: ${quoteVaultPDA.toString()}`);
+      
+      return {
+        poolState: poolStatePDA,
+        baseVault: baseVaultPDA,
+        quoteVault: quoteVaultPDA,
+      };
+      
+    } catch (error) {
+      console.log(`❌ Failed to derive pool addresses: ${error}`);
+      throw new Error(`Cannot find or derive pool addresses for token ${tokenKey}. Pool may not exist or token may not be launched on Raydium Launchpad.`);
+    }
+  }
+  /**
    * Create buy instructions for Tech mode (Raydium Launchpad)
    * Based on your working transaction data and backup files
    */
@@ -224,10 +310,8 @@ export class BonkFunService {
     
     const lamports = Math.floor(solAmount * LAMPORTS_PER_SOL);
     
-    // Use working pool accounts for the example token from your successful transaction
-    const poolState = new PublicKey('DhS1tg8pQMoNW4Twz8jgT3uzwtMA9iKACYWtinG9EtnD');
-    const baseVault = new PublicKey('2zzfnjmjKVC5wy2jp8FUNNLMdaNFQAMZDLVAJR8n6vuP');
-    const quoteVault = new PublicKey('EjgDLhFmVNUnXGktvHF8Y1oTYPAuxD1gbc2WCAvC2eSs');
+    // Get pool information for this specific token
+    const { poolState, baseVault, quoteVault } = await this.getPoolInfo(tokenMint);
     
     console.log(`🏊 Pool State: ${poolState.toString()}`);
     console.log(`📦 Base Vault: ${baseVault.toString()}`);

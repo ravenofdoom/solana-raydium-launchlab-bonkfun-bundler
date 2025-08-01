@@ -226,8 +226,8 @@ async function main() {
   try {
     const launcher = new BonkFunBundleLauncher();
 
-    // Use the real BonkFun token from the documentation
-    const tokenMint = '8dqNN3h1Da5QTXW419oJrYfLAM2u13kCqLkRHdufbonk'; // From STATUS.md
+    // Use the working BonkFun token that we have pool addresses for
+    const tokenMint = '8dqNN3h1Da5QTXW419oJrYfLAM2u13kCqLkRHdufbonk'; // Known working token
 
     console.log('🎯 BonkFun Bundle Buy Test');
     console.log('='.repeat(40));
