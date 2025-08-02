@@ -141,6 +141,34 @@ npx ts-node scripts/show-all-wallets.ts
 
 This script automatically finds all wallet session files and displays comprehensive information for each wallet, making it ideal for getting a complete overview of all your encrypted wallets.
 
+### Method 5: Collect SOL from All Sessions
+
+**MOST IMPORTANT**: Collect all remaining SOL from all wallet sessions back to your main wallet:
+
+```bash
+npx ts-node scripts/working-collection.ts
+```
+
+**What this does:**
+- 🔍 **Scans all wallet session files** in the `wallets/` directory
+- 🔓 **Decrypts all encrypted wallets** using your `WALLET_ENCRYPTION_KEY`
+- 💰 **Checks balances** on all wallets across all sessions
+- 💸 **Transfers SOL back** to your main wallet (leaves rent exemption: 0.000896 SOL)
+- 📊 **Shows detailed summary** with total collected amounts
+
+**Example output:**
+```
+🎉 COLLECTION COMPLETE!
+📊 Summary:
+   • Sessions processed: 6
+   • Successful sessions: 2
+   • Total SOL collected: 0.070521 SOL
+   • Net gain: 0.070521 SOL
+✅ SUCCESS! Collected 0.070521 SOL from stuck wallets!
+```
+
+**Perfect for**: Recovering funds after bundle operations, cleaning up test sessions, or preparing for new operations.
+
 ## 🔐 Security Notes
 
 - **Private keys are encrypted** using AES-256-GCM with your `WALLET_ENCRYPTION_KEY`
