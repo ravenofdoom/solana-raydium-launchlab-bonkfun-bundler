@@ -6,7 +6,7 @@
 
 **Problem**: ES module import error with bs58 library
 
-```
+```text
 error TS1259: Module '"bs58"' can only be default-imported using the 'esModuleInterop' flag
 ```
 
@@ -24,9 +24,7 @@ error TS1259: Module '"bs58"' can only be default-imported using the 'esModuleIn
 
 **Problem**: Wallets funded with 0.008 SOL couldn't create wrapped SOL accounts
 
-```
 Transfer: insufficient lamports 3916440, need 6000000
-```
 
 **Analysis**:
 
