@@ -91,6 +91,44 @@ npm run closeLut
 npm run closeWsol
 ```
 
+### Method 3: Wallet Management & SOL Collection
+
+**MOST IMPORTANT** - Manage your wallet sessions and collect SOL:
+
+```bash
+# Check all wallet sessions and balances (WORKING ✅)
+npm run access-wallets
+
+# Collect all SOL from all sessions (WORKING ✅)
+npx ts-node scripts/working-collection.ts
+```
+
+**What these commands do:**
+
+- 🔍 **access-wallets**: Shows private keys, balances, and comprehensive wallet information
+- 💰 **working-collection.ts**: Collects SOL back to main wallet (leaves 0.000891 SOL rent exemption)
+
+**⚠️ IMPORTANT SOL MANAGEMENT NOTES:**
+
+- 🎯 **Always collect SOL after each session** to prevent accumulation
+- 💸 **Each wallet keeps 0.000891 SOL** (rent exemption) - this adds up over time
+- 🔄 **New wallets are generated each session** - old wallets remain with small amounts
+- 📊 **Monitor total sessions** - 10 sessions = ~0.009 SOL permanently locked
+- 🧹 **Regular cleanup recommended** to prevent SOL fragmentation
+
+**Typical Session Cleanup Workflow:**
+
+```bash
+# 1. Run bundle operation
+npm run main
+
+# 2. Immediately collect SOL back
+npx ts-node scripts/working-collection.ts
+
+# 3. Verify collection completed
+npm run access-wallets
+```
+
 ## 📊 What Happens During Execution
 
 1. **Wallet Setup**: Generates 16 buyer wallets

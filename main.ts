@@ -6,12 +6,12 @@ import {
   VersionedTransaction,
 } from "@solana/web3.js";
 import bs58 from "bs58"
-import { DISTRIBUTE_AMOUNTS, DISTRIBUTE_WALLET_NUM, PRIVATE_KEY, RPC_ENDPOINT} from "./constants";
+import { DISTRIBUTE_AMOUNTS, DISTRIBUTE_WALLET_NUM, PRIVATE_KEY, RPC_ENDPOINT} from "./src/constants";
 import { createExtendLut, createLutInst } from "./src/LUT";
 import { createTokenTx } from "./src/token";
 import { makeBuyTx } from "./src/buy";
 import { distributeSol } from "./src/distribute";
-import { saveLUTFile } from "./utils";
+import { saveLUTFile } from "./src/utils";
 import { sendBundleByLilJit } from "./executor/liljit";
 
 

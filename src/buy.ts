@@ -13,7 +13,7 @@ import {
   getAssociatedTokenAddress,
   TOKEN_PROGRAM_ID,
 } from "@solana/spl-token";
-import { SLIPPAGE_TOLERANCE } from "../constants";
+import { SLIPPAGE_TOLERANCE } from "./constants";
 import { getLookupTableAccount } from "./LUT";
 
 export interface BuyTransactionResult {

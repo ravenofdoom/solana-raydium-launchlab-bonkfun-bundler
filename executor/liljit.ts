@@ -9,7 +9,7 @@ import {
 import { searcherClient } from "jito-ts/dist/sdk/block-engine/searcher";
 import { Bundle } from "jito-ts/dist/sdk/block-engine/types";
 import bs58 from "bs58";
-import { JITO_URL, JITO_TIP_AMOUNT, MAX_RETRIES } from "../constants";
+import { JITO_URL, JITO_TIP_AMOUNT, MAX_RETRIES } from "../src/constants";
 
 /**
  * Sends a bundle of transactions using Jito

@@ -15,7 +15,7 @@ import {
   TOKEN_PROGRAM_ID,
   getMinimumBalanceForRentExemptMint,
 } from "@solana/spl-token";
-import { TOKEN_NAME, TOKEN_SYMBOL, TOKEN_DECIMALS, TOTAL_SUPPLY } from "../constants";
+import { TOKEN_NAME, TOKEN_SYMBOL, TOKEN_DECIMALS, TOTAL_SUPPLY } from "./constants";
 
 /**
  * Creates a new SPL token
