@@ -38,34 +38,6 @@ npm run sell recover <sessionId>
 
 ## 📋 Complete Workflow
 
-### Step 0: Quick SOL Collection (Priority Action)
-
-**MOST IMPORTANT**: Before starting new operations, collect all remaining SOL from previous sessions:
-
-```bash
-npx ts-node scripts/working-collection.ts
-```
-
-**What this does:**
-
-- 🔍 **Automatically finds all wallet session files** in `/wallets/` directory
-- 🔓 **Decrypts all encrypted wallets** using your `WALLET_ENCRYPTION_KEY`
-- 💰 **Checks SOL balances** across all wallets in all sessions
-- 💸 **Transfers SOL back to your main wallet** (leaves rent exemption: 0.000896 SOL)
-- 📊 **Shows detailed collection summary**
-
-**Example output:**
-
-🎉 COLLECTION COMPLETE!
-📊 Summary:
-   • Sessions processed: 6
-   • Successful sessions: 2
-   • Total SOL collected: 0.070521 SOL
-   • Net gain: 0.070521 SOL
-✅ SUCCESS! Collected 0.070521 SOL from stuck wallets!
-
-**Perfect for**: Emergency fund recovery, cleaning up after failed operations, preparing for new bundles.
-
 ### Step 1: Configure Encryption
 
 ```bash

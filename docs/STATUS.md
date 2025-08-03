@@ -2,39 +2,19 @@
 
 ## ✅ FIXED ISSUES
 
-### 1. TypeScript Compilation Errors (LATEST)
-
-- ✅ **bs58 import error** - Fixed `import bs58 from 'bs58'` to `import * as bs58 from 'bs58'`
-- ✅ **scripts/bonkfun-bundle-buy.ts** - ES module compatibility resolved
-- ✅ **src/wallet-manager.ts** - ES module compatibility resolved
-- ✅ All TypeScript compilation errors resolved
-
-### 2. SOL Funding Issues (LATEST)
-
-- ✅ **Wrapped SOL account creation** - Increased funding from 0.008 to 0.015 SOL per wallet
-- ✅ **Insufficient lamports error** - Fixed "Transfer: insufficient lamports 3916440, need 6000000"
-- ✅ **SOL recovery** - Successfully recovered 0.021312 SOL from failed test sessions
-
-### 3. Compilation Errors Resolved (PREVIOUS)
+### 1. Compilation Errors Resolved
 
 - ❌ **demo.ts** - Fixed imports and API usage
 - ❌ **test-bonkfun-bundle.ts** - Fixed imports and API usage  
 - ✅ All TypeScript compilation errors resolved
 
-### 4. Correct File Structure
+### 2. Correct File Structure
 
 - ✅ **test-real-token-creation.ts** - EXISTING & WORKING (uses BundleLauncher correctly)
 - ✅ **demo.ts** - Fixed to use correct APIs
 - ✅ **test-bonkfun-bundle.ts** - Fixed for individual testing
 
 ## 🚀 AVAILABLE SCRIPTS
-
-### ⭐ READY FOR TESTING (LATEST)
-
-```bash
-# BonkFun bundle script with TypeScript and SOL funding fixes
-npx ts-node --compilerOptions '{"skipLibCheck":true}' scripts/bonkfun-bundle-buy.ts
-```
 
 ### Core Testing Scripts
 
@@ -52,15 +32,6 @@ npm run test-bonkfun        # Test real BonkFun integration
 npm run test-mainnet-bundle # Test mainnet bundle operations
 ```
 
-### 🧪 Devnet Testing Scripts (Safe Testing)
-
-```bash
-# Complete devnet testing workflow
-npx ts-node tests/devnet-bundler-fixed.ts      # Create tokens & test bundling
-npx ts-node tests/devnet-bundle-seller.ts      # Cleanup & recover SOL
-npx ts-node tests/devnet-token-seller.ts       # Alternative token selling
-```
-
 ## 📊 CURRENT FUNCTIONALITY STATUS
 
 ### ✅ WORKING FEATURES
@@ -69,8 +40,6 @@ npx ts-node tests/devnet-token-seller.ts       # Alternative token selling
 2. **Wallet Management** - Encrypted wallet storage and retrieval
 3. **Jito Bundling** - MEV-protected transaction bundling
 4. **BonkFun Integration** - Buy functionality with real BonkFun tokens
-5. **Devnet Testing** - Complete testing workflow without risking real SOL
-6. **SOL Recovery** - Working collection script for stuck wallets
 
 ### ❌ NOT YET WORKING
 
@@ -81,31 +50,14 @@ npx ts-node tests/devnet-token-seller.ts       # Alternative token selling
 
 ## 🎯 RECOMMENDED TESTING APPROACH
 
-### 1. Start with Devnet Testing (SAFE)
+### 1. Test Current Functionality
 
 ```bash
-# Step 1: Test core functionality on devnet
-npx ts-node tests/devnet-bundler-fixed.ts
-
-# Step 2: Test selling and cleanup
-npx ts-node tests/devnet-bundle-seller.ts
-
-# Step 3: Verify SOL recovery
-# Check main wallet balance increased
-```
-
-### 2. Test Current Mainnet Functionality
-
-```bash
-# Test TypeScript compilation fixes
-npx ts-node --compilerOptions '{"skipLibCheck":true}' scripts/bonkfun-bundle-buy.ts
-
-# Alternative: Use existing working tests
 npm run demo                 # See what's working
 npm run test-real           # Full integration test
 ```
 
-### 3. Development Focus
+### 2. Development Focus
 
 - **Priority 1**: Use `test-real-token-creation.ts` - this is the main working test
 - **Priority 2**: Reverse engineer BonkFun token creation program interface
@@ -160,31 +112,9 @@ npm run test-real           # Full integration test
 
 Current setup in `.env`:
 
-- ✅ **Mainnet enabled** with Helius RPC
-- ✅ **Devnet configuration** available for safe testing
-- ✅ **Jito bundling** configured  
-- ✅ **BonkFun tech mode** enabled
-- ✅ **Bundle parameters** configured
-
-### Devnet Testing Configuration
-
-```env
-# Switch to devnet for safe testing
-RPC_ENDPOINT=https://api.devnet.solana.com
-
-# Devnet-specific settings
-DEVNET_BUYER_WALLETS=16
-DEVNET_SOL_PER_WALLET=0.01
-DEVNET_BUY_AMOUNT=0.001
-```
-
-### Mainnet Configuration (Current)
-
-```env  
-# Mainnet with fixed SOL amounts
-BONKFUN_BUNDLE_SOL_PER_WALLET=0.015  # Increased for wrapped SOL
-BONKFUN_BUNDLE_BUY_AMOUNT=0.006      # Fixed buy amount
-BONKFUN_MAX_SLIPPAGE=0.05            # 5% slippage
-```
+- ✅ Mainnet enabled with Helius RPC
+- ✅ Jito bundling configured
+- ✅ BonkFun tech mode enabled
+- ✅ Bundle parameters configured
 
 The project is ready for bundle testing with existing BonkFun tokens!

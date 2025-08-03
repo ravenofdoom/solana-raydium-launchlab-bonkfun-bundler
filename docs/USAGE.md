@@ -63,26 +63,6 @@ Convert to base58 format using a tool or script.
 
 ## 🎯 Usage
 
-### 💰 COLLECT SOL FROM ALL SESSIONS (Priority Command)
-
-Before running new operations, collect all SOL from previous sessions:
-
-```bash
-# Collect SOL from ALL wallet sessions automatically
-npx ts-node scripts/working-collection.ts
-
-# Or collect from a specific session
-npx ts-node scripts/working-collection.ts BONK_1754048277095
-```
-
-This will:
-
-- **Scan all encrypted wallet files** in the `wallets/` directory
-- **Decrypt and load wallets** from all sessions
-- **Check balances** and collect SOL back to your main wallet
-- **Show total recovered amounts** per session
-- **Display transaction signatures** for verification
-
 ### Method 1: Simple Bundler (Recommended)
 
 ```bash
@@ -236,18 +216,6 @@ RPC_ENDPOINT=https://solana-mainnet.core.chainstack.com/YOUR_KEY
 ```
 
 ## 🛠️ Troubleshooting
-
-### 💰 Quick SOL Recovery (Most Common Need)
-
-If you need to collect SOL from previous sessions:
-
-```bash
-# Collect from ALL sessions (recommended)
-npx ts-node scripts/working-collection.ts
-
-# View all wallets and their balances first
-npx ts-node scripts/show-all-wallets.ts
-```
 
 ### Reset Everything
 
