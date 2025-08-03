@@ -47,6 +47,7 @@ npx ts-node scripts/working-collection.ts
 ```
 
 **What this does:**
+
 - 🔍 **Automatically finds all wallet session files** in `/wallets/` directory
 - 🔓 **Decrypts all encrypted wallets** using your `WALLET_ENCRYPTION_KEY`
 - 💰 **Checks SOL balances** across all wallets in all sessions
@@ -54,7 +55,7 @@ npx ts-node scripts/working-collection.ts
 - 📊 **Shows detailed collection summary**
 
 **Example output:**
-```
+
 🎉 COLLECTION COMPLETE!
 📊 Summary:
    • Sessions processed: 6
@@ -62,7 +63,6 @@ npx ts-node scripts/working-collection.ts
    • Total SOL collected: 0.070521 SOL
    • Net gain: 0.070521 SOL
 ✅ SUCCESS! Collected 0.070521 SOL from stuck wallets!
-```
 
 **Perfect for**: Emergency fund recovery, cleaning up after failed operations, preparing for new bundles.
 
